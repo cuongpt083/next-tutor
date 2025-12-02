@@ -1,0 +1,71 @@
+<div class="login-container">
+    <div class="card login-card">
+        <div class="welcome-section">
+            <h2>Welcome to Next Tutor! 👋</h2>
+            <p class="muted">Đăng nhập nhanh để lưu tiến độ học tập và nhận huy hiệu.</p>
+
+            <div class="tutor-illustration">
+                <div class="tutor-avatar">🤖</div>
+                <p class="muted">"Hi! Mình sẽ giúp bạn luyện Nghe • Nói • Đọc • Viết nhé!"</p>
+                <span class="badge">Thân thiện • Vui tính • Kiên nhẫn</span>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="login-buttons">
+            <button class="btn facebook full" (click)="loginWithFacebook()" [disabled]="isLoading">
+                📘 Đăng nhập bằng Facebook
+            </button>
+
+            <div class="spacer"></div>
+
+            <button class="btn zalo full" (click)="loginWithZalo()" [disabled]="isLoading">
+                💬 Đăng nhập bằng Zalo
+            </button>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+        </div>
+
+        <div *ngIf="isLoading" class="loading-state">
+            <div class="ai-state thinking">
+                <div class="ai-face">🤖</div>
+                <span>Đang xác thực...</span>
+                <span class="sparkle"></span><span class="sparkle"></span><span class="sparkle"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="features-section">
+        <div class="card">
+            <div class="k">Vì sao Next Tutor? 🌈</div>
+            <div class="spacer"></div>
+
+            <div class="feature-card">
+                <div class="feature-ico">🗣️</div>
+                <div>
+                    <div class="k">Luyện Speaking</div>
+                    <div class="muted">Nói chuyện bằng giọng nói với gia sư AI.</div>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-ico">🎧</div>
+                <div>
+                    <div class="k">Luyện Listening</div>
+                    <div class="muted">Nghe – nghe lại, có script hỗ trợ.</div>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-ico">🎭</div>
+                <div>
+                    <div class="k">Game nhập vai</div>
+                    <div class="muted">Học tự nhiên qua câu chuyện đáng yêu.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

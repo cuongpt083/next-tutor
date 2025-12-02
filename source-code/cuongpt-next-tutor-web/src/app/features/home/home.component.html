@@ -1,0 +1,65 @@
+<div class="home-container">
+    <div class="card">
+        <h2>Xin chào, {{ currentUser?.displayName || 'Bạn' }}! 🌟</h2>
+        <p class="muted">Hôm nay mình muốn luyện gì nào?</p>
+
+        <div class="divider"></div>
+
+        <div class="card tutor-status">
+            <div class="row">
+                <div class="k">Gia sư hiện tại</div>
+                <span class="chip right">🧸 <span class="k">Chưa chọn</span></span>
+            </div>
+            <p class="muted">
+                Bạn chưa chọn gia sư. Hãy chọn 1 người bạn đồng hành nhé!
+            </p>
+            <div class="spacer"></div>
+            <button class="btn secondary full" (click)="selectTutor()">
+                🧸 Chọn gia sư AI
+            </button>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="action-buttons">
+            <button class="btn primary" (click)="startSpeaking()">💬 Bắt đầu nói</button>
+            <button class="btn ghost" (click)="startQuiz()">🎧 Làm quiz</button>
+            <button class="btn ghost" (click)="startRolePlay()">🎭 Game nhập vai</button>
+        </div>
+
+        <div class="spacer"></div>
+        <p class="muted">Thông báo / gợi ý bài tiếp theo có thể hiển thị tại đây.</p>
+    </div>
+
+    <div class="card features-card">
+        <div class="k">Lối tắt chức năng</div>
+        <div class="spacer"></div>
+
+        <div class="feature-card">
+            <div class="feature-ico">🗣️</div>
+            <div>
+                <div class="k">Luyện Nghe & Nói</div>
+                <div class="muted">Voice chat với gia sư AI.</div>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-ico">📖</div>
+            <div>
+                <div class="k">Luyện Đọc & Viết</div>
+                <div class="muted">Quiz + sắp xếp câu.</div>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-ico">📈</div>
+            <div>
+                <div class="k">Báo cáo tiến độ</div>
+                <div class="muted">Dashboard 7 ngày + radar kỹ năng.</div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+        <button class="btn primary full">▶️ Tiếp tục bài học gợi ý</button>
+    </div>
+</div>

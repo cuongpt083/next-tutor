@@ -1,0 +1,92 @@
+:root {
+  /* Candy/pastel palette (avoid pure black/gray) */
+  --blue: #2F80FF;
+  --yellow: #FFD84D;
+  --orange: #FF8A3D;
+  --green: #2ED573;
+  --pink: #FFB6D5;
+
+  --bg: #F6FBFF;
+  --card: #FFFFFF;
+  --ink: #1F3A5F;
+  --muted: #5A7AA6;
+  --border: #D9ECFF;
+
+  --shadow: 0 12px 32px rgba(31, 58, 95, .12);
+  --shadowSoft: 0 8px 18px rgba(31, 58, 95, .10);
+
+  --r-xl: 24px;
+  --r-lg: 20px;
+  --r-md: 16px;
+
+  --tap: 56px;
+  --sidebar: 280px;
+  --maxw: 1180px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Nunito", "Quicksand", ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 600px at 25% -10%, rgba(47, 128, 255, .18), transparent 55%),
+    radial-gradient(900px 520px at 95% 0%, rgba(255, 216, 77, .25), transparent 55%),
+    radial-gradient(900px 520px at 15% 100%, rgba(255, 182, 213, .20), transparent 55%),
+    var(--bg);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+/* Utility classes */
+.k {
+  font-weight: 900;
+}
+
+.muted {
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.right {
+  margin-left: auto;
+}
+
+.spacer {
+  height: 10px;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 12px 0;
+}

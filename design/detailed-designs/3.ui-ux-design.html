@@ -1,0 +1,2109 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Next Tutor UI Templates (Input for Angular Generator)</title>
+
+    <!-- Rounded sans fonts per spec -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Quicksand:wght@600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            /* Candy/pastel palette (avoid pure black/gray) */
+            --blue: #2F80FF;
+            --yellow: #FFD84D;
+            --orange: #FF8A3D;
+            --green: #2ED573;
+            --pink: #FFB6D5;
+
+            --bg: #F6FBFF;
+            --card: #FFFFFF;
+            --ink: #1F3A5F;
+            /* soft navy instead of pure black */
+            --muted: #5A7AA6;
+            /* soft muted blue */
+            --border: #D9ECFF;
+
+            --shadow: 0 12px 32px rgba(31, 58, 95, .12);
+            --shadowSoft: 0 8px 18px rgba(31, 58, 95, .10);
+
+            --r-xl: 24px;
+            --r-lg: 20px;
+            --r-md: 16px;
+
+            --tap: 56px;
+            /* large touch target per spec */
+            --sidebar: 280px;
+            --maxw: 1180px;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            font-family: "Nunito", "Quicksand", ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(1200px 600px at 25% -10%, rgba(47, 128, 255, .18), transparent 55%),
+                radial-gradient(900px 520px at 95% 0%, rgba(255, 216, 77, .25), transparent 55%),
+                radial-gradient(900px 520px at 15% 100%, rgba(255, 182, 213, .20), transparent 55%),
+                var(--bg);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit
+        }
+
+        /* ===== App Shell (Desktop sidebar / Mobile bottom-nav) ===== */
+        .app-shell {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+        @media (min-width: 980px) {
+            .app-shell {
+                grid-template-columns: var(--sidebar) 1fr;
+            }
+        }
+
+        .sidebar {
+            display: none;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            padding: 18px;
+            gap: 14px;
+            flex-direction: column;
+        }
+
+        @media (min-width: 980px) {
+            .sidebar {
+                display: flex;
+            }
+        }
+
+        .main {
+            padding: 18px 16px 96px;
+            /* room for bottom nav on mobile */
+            max-width: var(--maxw);
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        @media (min-width: 980px) {
+            .main {
+                padding: 22px 22px 26px;
+            }
+        }
+
+        /* Brand card */
+        .brand {
+            background: rgba(255, 255, 255, .78);
+            border: 1px solid var(--border);
+            border-radius: var(--r-xl);
+            box-shadow: var(--shadowSoft);
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 18px;
+            display: grid;
+            place-items: center;
+            color: white;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--blue), #66B2FF);
+            box-shadow: 0 14px 28px rgba(47, 128, 255, .25);
+        }
+
+        .brand-title {
+            margin: 0;
+            font-size: 18px;
+            line-height: 1.1;
+            font-weight: 900
+        }
+
+        .brand-sub {
+            margin: 2px 0 0;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 800
+        }
+
+        /* Sidebar nav */
+        .nav {
+            background: rgba(255, 255, 255, .78);
+            border: 1px solid var(--border);
+            border-radius: var(--r-xl);
+            box-shadow: var(--shadowSoft);
+            padding: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-item {
+            width: 100%;
+            border: 0;
+            background: transparent;
+            border-radius: 18px;
+            padding: 12px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            cursor: pointer;
+            transition: transform .08s ease, background .15s ease;
+            min-height: 44px;
+        }
+
+        .nav-item:hover {
+            background: rgba(47, 128, 255, .08);
+        }
+
+        .nav-item:active {
+            transform: scale(.99);
+        }
+
+        .nav-item .ico {
+            width: 42px;
+            height: 42px;
+            border-radius: 18px;
+            display: grid;
+            place-items: center;
+            background: rgba(47, 128, 255, .10);
+            border: 1px solid rgba(47, 128, 255, .16);
+            font-size: 18px;
+        }
+
+        .nav-item .txt strong {
+            display: block;
+            font-size: 14px;
+            font-weight: 900
+        }
+
+        .nav-item .txt span {
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+            font-weight: 800;
+            margin-top: 2px
+        }
+
+        .nav-item[aria-current="page"] {
+            background: linear-gradient(135deg, rgba(47, 128, 255, .16), rgba(255, 216, 77, .18));
+            border: 1px solid rgba(47, 128, 255, .20);
+        }
+
+        /* Profile / user header */
+        .profile {
+            margin-top: auto;
+            background: rgba(255, 255, 255, .78);
+            border: 1px solid var(--border);
+            border-radius: var(--r-xl);
+            box-shadow: var(--shadowSoft);
+            padding: 14px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 20px;
+            display: grid;
+            place-items: center;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--orange), var(--yellow));
+            box-shadow: 0 16px 30px rgba(255, 138, 61, .22);
+        }
+
+        .profile .hello {
+            font-weight: 900
+        }
+
+        .profile .meta {
+            font-size: 12px;
+            color: var(--muted);
+            font-weight: 800;
+            margin-top: 2px
+        }
+
+        /* Topbar */
+        .topbar {
+            position: sticky;
+            top: 12px;
+            z-index: 10;
+            background: rgba(255, 255, 255, .80);
+            border: 1px solid var(--border);
+            border-radius: var(--r-xl);
+            box-shadow: var(--shadowSoft);
+            backdrop-filter: blur(10px);
+            padding: 14px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .topbar-left {
+            display: flex;
+            gap: 12px;
+            align-items: center
+        }
+
+        .titlebox strong {
+            display: block;
+            font-size: 16px;
+            font-weight: 900
+        }
+
+        .titlebox span {
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+            font-weight: 800;
+            margin-top: 2px
+        }
+
+        /* Chips */
+        .chip {
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+            min-height: 40px;
+            padding: 10px 12px;
+            border-radius: 999px;
+            background: rgba(246, 251, 255, .85);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        /* Cards / layout */
+        .stack {
+            margin-top: 16px;
+            display: grid;
+            gap: 14px;
+        }
+
+        .grid {
+            display: grid;
+            gap: 14px;
+        }
+
+        @media (min-width: 780px) {
+            .grid.cols-2 {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .grid.cols-3 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, .82);
+            border: 1px solid var(--border);
+            border-radius: var(--r-xl);
+            box-shadow: var(--shadow);
+            padding: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .card h2 {
+            margin: 0;
+            font-size: 26px;
+            letter-spacing: -.2px;
+            font-weight: 900;
+        }
+
+        .muted {
+            color: var(--muted);
+            font-weight: 800;
+        }
+
+        .k {
+            font-weight: 900;
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 12px 0;
+        }
+
+        /* Buttons (Primary must be large & punchy) */
+        .btn {
+            border: 0;
+            border-radius: 20px;
+            padding: 14px 16px;
+            min-height: var(--tap);
+            font-weight: 900;
+            cursor: pointer;
+            user-select: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: transform .08s ease, filter .15s ease;
+        }
+
+        .btn:active {
+            transform: scale(.98);
+        }
+
+        .btn.primary {
+            color: white;
+            background: linear-gradient(135deg, var(--blue), #66B2FF);
+            box-shadow: 0 16px 32px rgba(47, 128, 255, .25);
+        }
+
+        .btn.secondary {
+            color: var(--ink);
+            background: linear-gradient(135deg, var(--yellow), var(--orange));
+            box-shadow: 0 16px 32px rgba(255, 138, 61, .18);
+        }
+
+        .btn.ghost {
+            color: var(--ink);
+            background: rgba(47, 128, 255, .10);
+            border: 1px solid rgba(47, 128, 255, .16);
+            box-shadow: none;
+        }
+
+        .btn.full {
+            width: 100%;
+        }
+
+        /* Social buttons (platform colors but harmonious) */
+        .btn.facebook {
+            color: white;
+            background: linear-gradient(135deg, #1877F2, #4A90FF);
+            box-shadow: 0 16px 32px rgba(24, 119, 242, .22);
+        }
+
+        .btn.zalo {
+            color: white;
+            background: linear-gradient(135deg, #0068FF, #00B2FF);
+            box-shadow: 0 16px 32px rgba(0, 104, 255, .18);
+        }
+
+        /* Inputs */
+        .field {
+            display: grid;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 900;
+            color: var(--muted);
+        }
+
+        input,
+        select,
+        textarea {
+            min-height: var(--tap);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: rgba(246, 251, 255, .88);
+            padding: 14px;
+            color: var(--ink);
+            font-weight: 800;
+            outline: none;
+            box-shadow: inset 0 2px 0 rgba(31, 58, 95, .04);
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: rgba(47, 128, 255, .35);
+            box-shadow: 0 0 0 4px rgba(47, 128, 255, .14);
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        /* Bottom Nav (mobile) */
+        .bottom-nav {
+            position: fixed;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+            background: rgba(255, 255, 255, .88);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            border-radius: 28px;
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+            z-index: 50;
+            backdrop-filter: blur(12px);
+        }
+
+        @media (min-width: 980px) {
+            .bottom-nav {
+                display: none;
+            }
+        }
+
+        .tab {
+            flex: 1;
+            border: 0;
+            background: transparent;
+            border-radius: 22px;
+            min-height: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            cursor: pointer;
+            color: var(--muted);
+            font-weight: 900;
+            transition: transform .08s ease, background .15s ease;
+        }
+
+        .tab:active {
+            transform: scale(.98);
+        }
+
+        .tab .ico {
+            font-size: 18px;
+        }
+
+        .tab .lbl {
+            font-size: 12px;
+        }
+
+        .tab[aria-current="page"] {
+            color: var(--ink);
+            background: linear-gradient(135deg, rgba(47, 128, 255, .16), rgba(255, 216, 77, .18));
+            border: 1px solid rgba(47, 128, 255, .18);
+        }
+
+        /* ===== Cute AI States (no spinner) ===== */
+        .ai-state {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(47, 128, 255, .16);
+            background: rgba(47, 128, 255, .08);
+            font-weight: 900;
+            color: var(--muted);
+        }
+
+        .ai-face {
+            width: 34px;
+            height: 34px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            background: rgba(255, 216, 77, .20);
+            border: 1px solid rgba(255, 216, 77, .30);
+        }
+
+        .sparkle {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(47, 128, 255, .55);
+            display: inline-block;
+            animation: pop 1s infinite ease-in-out;
+        }
+
+        .sparkle:nth-child(2) {
+            animation-delay: .12s
+        }
+
+        .sparkle:nth-child(3) {
+            animation-delay: .24s
+        }
+
+        @keyframes pop {
+
+            0%,
+            80%,
+            100% {
+                transform: translateY(0);
+                opacity: .55
+            }
+
+            40% {
+                transform: translateY(-6px);
+                opacity: 1
+            }
+        }
+
+        .listening .ai-face {
+            animation: wiggle 1.2s infinite ease-in-out;
+        }
+
+        @keyframes wiggle {
+
+            0%,
+            100% {
+                transform: rotate(0deg)
+            }
+
+            50% {
+                transform: rotate(-6deg)
+            }
+        }
+
+        .thinking .ai-face {
+            animation: blink 1.3s infinite ease-in-out;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                transform: scaleY(1)
+            }
+
+            50% {
+                transform: scaleY(.75)
+            }
+        }
+
+        /* ===== Common UI blocks ===== */
+        .feature-card {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 14px;
+            border-radius: var(--r-xl);
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, .78);
+            box-shadow: var(--shadowSoft);
+        }
+
+        .feature-ico {
+            width: 52px;
+            height: 52px;
+            border-radius: 22px;
+            display: grid;
+            place-items: center;
+            font-size: 22px;
+            background: rgba(255, 182, 213, .20);
+            border: 1px solid rgba(255, 182, 213, .30);
+        }
+
+        /* Tutor cards (FR-02) */
+        .tutor-grid {
+            display: grid;
+            gap: 14px;
+            margin-top: 12px;
+        }
+
+        @media (min-width: 860px) {
+            .tutor-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .tutor-card {
+            position: relative;
+            min-height: 220px;
+            cursor: pointer;
+            transition: transform .08s ease;
+        }
+
+        .tutor-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .tutor-head {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .tutor-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 26px;
+            display: grid;
+            place-items: center;
+            font-size: 32px;
+            background:
+                radial-gradient(60px 60px at 30% 20%, rgba(255, 216, 77, .55), transparent 60%),
+                radial-gradient(70px 60px at 80% 70%, rgba(47, 128, 255, .25), transparent 60%),
+                rgba(246, 251, 255, .88);
+            border: 1px solid rgba(47, 128, 255, .16);
+            box-shadow: 0 12px 24px rgba(31, 58, 95, .10);
+        }
+
+        .badge {
+            display: inline-flex;
+            padding: 8px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 900;
+            border: 1px solid rgba(255, 216, 77, .35);
+            background: rgba(255, 216, 77, .22);
+            width: fit-content;
+        }
+
+        .select-pill {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 40px;
+            height: 40px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            background: rgba(255, 216, 77, .95);
+            border: 1px solid rgba(255, 216, 77, .60);
+            box-shadow: 0 16px 30px rgba(255, 216, 77, .22);
+            font-weight: 900;
+        }
+
+        /* Chat bubbles (FR-03) */
+        .chat {
+            display: grid;
+            gap: 12px;
+            padding: 12px;
+            border-radius: var(--r-xl);
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, .70);
+            box-shadow: var(--shadowSoft);
+            min-height: 320px;
+        }
+
+        .bubble {
+            max-width: 86%;
+            padding: 12px 14px;
+            border-radius: 22px;
+            border: 1px solid var(--border);
+            font-weight: 900;
+            line-height: 1.35;
+            position: relative;
+        }
+
+        .bubble.ai {
+            background: rgba(47, 128, 255, .10);
+            border-color: rgba(47, 128, 255, .18);
+            justify-self: start;
+        }
+
+        .bubble.user {
+            background: rgba(46, 213, 115, .12);
+            border-color: rgba(46, 213, 115, .20);
+            justify-self: end;
+        }
+
+        .bubble .mini {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            font-size: 12px;
+            color: var(--muted);
+            font-weight: 900;
+            margin-bottom: 6px;
+        }
+
+        .mini .tiny-face {
+            width: 22px;
+            height: 22px;
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            background: rgba(255, 216, 77, .22);
+            border: 1px solid rgba(255, 216, 77, .30);
+        }
+
+        .bubble .actions {
+            margin-top: 8px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .iconbtn {
+            width: 44px;
+            height: 44px;
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            background: rgba(246, 251, 255, .88);
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            transition: transform .08s ease, background .15s ease;
+        }
+
+        .iconbtn:hover {
+            background: rgba(47, 128, 255, .08);
+        }
+
+        .iconbtn:active {
+            transform: scale(.98);
+        }
+
+        .mic-area {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-top: 12px;
+        }
+
+        .mic-btn {
+            flex: 1;
+            min-height: 64px;
+            border-radius: 26px;
+            border: 0;
+            cursor: pointer;
+            font-weight: 1000;
+            background: linear-gradient(135deg, var(--yellow), rgba(47, 128, 255, .92));
+            box-shadow: 0 18px 40px rgba(47, 128, 255, .18);
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+            transition: transform .08s ease;
+        }
+
+        .mic-btn:active {
+            transform: scale(.98);
+        }
+
+        .hint-pill {
+            min-height: 56px;
+            border-radius: 22px;
+            border: 1px solid rgba(255, 182, 213, .35);
+            background: rgba(255, 182, 213, .20);
+            padding: 12px 14px;
+            font-weight: 900;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        /* Quiz (FR-04) */
+        .progresswrap {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .progressbar {
+            flex: 1;
+            height: 12px;
+            border-radius: 999px;
+            background: rgba(47, 128, 255, .10);
+            border: 1px solid rgba(47, 128, 255, .14);
+            overflow: hidden;
+            min-width: 180px;
+        }
+
+        .progressbar>div {
+            height: 100%;
+            width: 45%;
+            background: linear-gradient(90deg, var(--blue), rgba(255, 216, 77, .95));
+            border-radius: 999px;
+        }
+
+        .quiz-q {
+            font-size: 18px;
+            font-weight: 900;
+            margin: 0;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        @media (min-width: 760px) {
+            .quiz-options {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .opt {
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: rgba(246, 251, 255, .88);
+            padding: 14px;
+            min-height: var(--tap);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-weight: 900;
+            cursor: pointer;
+            transition: transform .08s ease;
+        }
+
+        .opt:active {
+            transform: scale(.985);
+        }
+
+        .opt .tag {
+            width: 34px;
+            height: 34px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            background: rgba(47, 128, 255, .12);
+            border: 1px solid rgba(47, 128, 255, .18);
+            font-size: 13px;
+        }
+
+        .result {
+            margin-top: 12px;
+            border-radius: var(--r-xl);
+            padding: 14px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, .80);
+            box-shadow: var(--shadowSoft);
+        }
+
+        .result.good {
+            border-color: rgba(46, 213, 115, .30);
+            background: rgba(46, 213, 115, .10);
+        }
+
+        .result.bad {
+            border-color: rgba(255, 138, 61, .35);
+            background: rgba(255, 138, 61, .10);
+        }
+
+        /* Writing arrange words (FR-05) */
+        .word-bank,
+        .sentence-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 12px;
+            border-radius: var(--r-xl);
+            border: 1px dashed rgba(47, 128, 255, .28);
+            background: rgba(47, 128, 255, .06);
+        }
+
+        .sentence-area {
+            border-style: solid;
+            border-color: rgba(255, 182, 213, .35);
+            background: rgba(255, 182, 213, .14);
+            min-height: 92px;
+            align-content: flex-start;
+        }
+
+        .word {
+            padding: 10px 12px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, .86);
+            box-shadow: var(--shadowSoft);
+            font-weight: 900;
+            cursor: grab;
+            user-select: none;
+        }
+
+        /* Role-play (FR-06) */
+        .scene {
+            position: relative;
+            min-height: 360px;
+            border-radius: var(--r-xl);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            background:
+                radial-gradient(900px 320px at 15% -10%, rgba(47, 128, 255, .25), transparent 60%),
+                radial-gradient(700px 260px at 92% 10%, rgba(255, 216, 77, .35), transparent 55%),
+                radial-gradient(600px 280px at 70% 120%, rgba(46, 213, 115, .22), transparent 55%),
+                linear-gradient(180deg, rgba(255, 255, 255, .65), rgba(246, 251, 255, .92));
+            box-shadow: var(--shadow);
+        }
+
+        .scene .decor {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: .85;
+        }
+
+        .cloud {
+            position: absolute;
+            top: 26px;
+            left: 22px;
+            width: 150px;
+            height: 64px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .78);
+            box-shadow: 0 14px 26px rgba(31, 58, 95, .10);
+        }
+
+        .cloud:before,
+        .cloud:after {
+            content: "";
+            position: absolute;
+            background: rgba(255, 255, 255, .78);
+            border-radius: 999px
+        }
+
+        .cloud:before {
+            width: 76px;
+            height: 50px;
+            left: 18px;
+            top: -18px
+        }
+
+        .cloud:after {
+            width: 84px;
+            height: 56px;
+            left: 62px;
+            top: -22px
+        }
+
+        .prop {
+            position: absolute;
+            bottom: -46px;
+            right: -46px;
+            width: 280px;
+            height: 250px;
+            border-radius: 70px;
+            background: rgba(47, 128, 255, .12);
+            border: 1px solid rgba(47, 128, 255, .16);
+            transform: rotate(-6deg);
+            box-shadow: 0 24px 52px rgba(31, 58, 95, .10);
+        }
+
+        .scene-inner {
+            position: relative;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            height: 100%;
+        }
+
+        .choice-grid {
+            display: grid;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        @media (min-width: 860px) {
+            .choice-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .choice {
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: rgba(246, 251, 255, .88);
+            padding: 14px;
+            min-height: var(--tap);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-weight: 900;
+            cursor: pointer;
+            transition: transform .08s ease;
+        }
+
+        .choice:active {
+            transform: scale(.985);
+        }
+
+        .choice .cico {
+            width: 36px;
+            height: 36px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            background: rgba(255, 138, 61, .14);
+            border: 1px solid rgba(255, 138, 61, .26);
+        }
+
+        /* Dashboard (FR-09) - simple “chart placeholders” */
+        .chart {
+            border-radius: var(--r-xl);
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, .78);
+            box-shadow: var(--shadowSoft);
+            padding: 14px;
+            min-height: 240px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart .placeholder {
+            position: absolute;
+            inset: 14px;
+            border-radius: 22px;
+            background:
+                repeating-linear-gradient(90deg,
+                    rgba(47, 128, 255, .10),
+                    rgba(47, 128, 255, .10) 12px,
+                    rgba(255, 216, 77, .12) 12px,
+                    rgba(255, 216, 77, .12) 24px);
+            opacity: .8;
+        }
+
+        .chart .label {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            font-weight: 900;
+        }
+
+        /* Utility */
+        .row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center
+        }
+
+        .right {
+            margin-left: auto
+        }
+
+        .spacer {
+            height: 10px
+        }
+
+        /* Page visibility (generator can split pages by [data-page]) */
+        .page {
+            display: block;
+        }
+
+        .page+.page {
+            margin-top: 18px;
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .page-title h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 1000;
+        }
+
+        /* For generator: clearly mark templates */
+        .template-badge {
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 1000;
+            padding: 8px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 182, 213, .35);
+            background: rgba(255, 182, 213, .20);
+            white-space: nowrap;
+        }
+
+        code.badgecode {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            font-weight: 900;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: rgba(47, 128, 255, .10);
+            border: 1px solid rgba(47, 128, 255, .16);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- =========================================================
+    INPUT NOTE (for Angular generator):
+    - Split each <section class="page" data-page="..."> into Angular route component
+    - Split reusable UI into components: sidebar, bottom-nav, topbar, cards, buttons, chat bubbles, etc.
+    - All IDs/classes are stable hooks for mapping.
+  ========================================================== -->
+
+    <div class="app-shell">
+        <!-- ===================== DESKTOP SIDEBAR (Component) ===================== -->
+        <aside class="sidebar" data-component="app-sidebar">
+            <div class="brand">
+                <div class="logo">NT</div>
+                <div>
+                    <div class="brand-title">Next Tutor</div>
+                    <div class="brand-sub">Học tiếng Anh vui như chơi</div>
+                </div>
+            </div>
+
+            <nav class="nav" aria-label="Điều hướng desktop" data-component="app-sidebar-nav">
+                <button class="nav-item" aria-current="page">
+                    <div class="ico">🏠</div>
+                    <div class="txt"><strong>Trang chủ</strong><span>Bắt đầu nhanh</span></div>
+                </button>
+                <button class="nav-item">
+                    <div class="ico">📚</div>
+                    <div class="txt"><strong>Học tập</strong><span>Chat • Quiz • Writing</span></div>
+                </button>
+                <button class="nav-item">
+                    <div class="ico">🎭</div>
+                    <div class="txt"><strong>Game nhập vai</strong><span>Role-play stories</span></div>
+                </button>
+                <button class="nav-item">
+                    <div class="ico">📈</div>
+                    <div class="txt"><strong>Báo cáo</strong><span>Dashboard tiến độ</span></div>
+                </button>
+                <button class="nav-item">
+                    <div class="ico">⚙️</div>
+                    <div class="txt"><strong>Cài đặt</strong><span>Trình độ • Mục tiêu</span></div>
+                </button>
+            </nav>
+
+            <div class="profile" data-component="user-profile-card">
+                <div class="avatar">👧</div>
+                <div>
+                    <div class="hello">Xin chào, <span class="k">Ben</span>!</div>
+                    <div class="meta">Streak: <span class="k">3</span> ngày • XP: <span class="k">120</span></div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ===================== MAIN ===================== -->
+        <main class="main">
+            <!-- ===================== TOPBAR (Component) ===================== -->
+            <header class="topbar" data-component="app-topbar">
+                <div class="topbar-left">
+                    <div class="titlebox">
+                        <strong>Templates UI — Next Tutor</strong>
+                        <span>Kid-friendly • Mobile bottom-nav • Desktop sidebar</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <span class="chip">🧸 Tutor: <span class="k">Chưa chọn</span></span>
+                    <span class="chip">🎯 Mục tiêu: <span class="k">Phát âm</span></span>
+                    <span class="chip">📘 Level: <span class="k">Starters</span></span>
+                </div>
+            </header>
+
+            <!-- =========================================================
+        PAGES (Templates) — generator should split by [data-page]
+      ========================================================== -->
+            <div class="stack" data-component="template-pages">
+
+                <!-- ===================== FR-01 LOGIN ===================== -->
+                <section class="page" data-page="login" id="page-login">
+                    <div class="page-title">
+                        <h3>Đăng nhập</h3>
+                        <span class="template-badge">Template <code class="badgecode">FR-01</code></span>
+                    </div>
+
+                    <div class="grid cols-2">
+                        <div class="card">
+                            <h2>Welcome to Next Tutor! 👋</h2>
+                            <p class="muted">Đăng nhập nhanh để lưu tiến độ học tập và nhận huy hiệu.</p>
+
+                            <div class="grid cols-2">
+                                <div>
+                                    <div class="field">
+                                        <label>Email / Username</label>
+                                        <input placeholder="ben@example.com" />
+                                    </div>
+                                    <div class="field">
+                                        <label>Mật khẩu</label>
+                                        <input type="password" placeholder="••••••••" />
+                                    </div>
+                                    <div class="spacer"></div>
+                                    <button class="btn primary full">✨ Đăng nhập</button>
+
+                                    <div class="row" style="margin-top:10px">
+                                        <a href="#" class="muted">Quên mật khẩu?</a>
+                                        <span class="muted">•</span>
+                                        <a href="#" class="muted">Tạo tài khoản</a>
+                                    </div>
+
+                                    <div class="divider"></div>
+
+                                    <button class="btn facebook full">📘 Đăng nhập bằng Facebook</button>
+                                    <div class="spacer"></div>
+                                    <button class="btn zalo full">💬 Đăng nhập bằng Zalo</button>
+
+                                    <div class="divider"></div>
+                                    <p class="muted">Gợi ý: Có thể hiển thị 1 dòng giới thiệu ngắn về ứng dụng ở đây.
+                                    </p>
+                                </div>
+
+                                <div class="card" style="box-shadow: var(--shadowSoft);">
+                                    <div class="k">Minh họa gia sư AI</div>
+                                    <div class="row" style="justify-content:center; margin-top:10px">
+                                        <div style="font-size:92px; line-height:1">🤖</div>
+                                    </div>
+                                    <p class="muted" style="text-align:center; margin:8px 0 0;">
+                                        “Hi! Mình sẽ giúp bạn luyện Nghe • Nói • Đọc • Viết nhé!”
+                                    </p>
+                                    <div class="row" style="justify-content:center; margin-top:12px">
+                                        <span class="badge">Thân thiện • Vui tính • Kiên nhẫn</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="k">Vì sao Next Tutor? 🌈</div>
+                            <div class="spacer"></div>
+                            <div class="feature-card">
+                                <div class="feature-ico">🗣️</div>
+                                <div>
+                                    <div class="k">Luyện Speaking</div>
+                                    <div class="muted">Nói chuyện bằng giọng nói với gia sư AI.</div>
+                                </div>
+                            </div>
+                            <div class="feature-card" style="margin-top:12px">
+                                <div class="feature-ico">🎧</div>
+                                <div>
+                                    <div class="k">Luyện Listening</div>
+                                    <div class="muted">Nghe – nghe lại, có script hỗ trợ.</div>
+                                </div>
+                            </div>
+                            <div class="feature-card" style="margin-top:12px">
+                                <div class="feature-ico">🎭</div>
+                                <div>
+                                    <div class="k">Game nhập vai</div>
+                                    <div class="muted">Học tự nhiên qua câu chuyện đáng yêu.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ===================== HOME SCREEN ===================== -->
+                <section class="page" data-page="home" id="page-home">
+                    <div class="page-title">
+                        <h3>Trang chủ</h3>
+                        <span class="template-badge">Template <code class="badgecode">HOME</code></span>
+                    </div>
+
+                    <div class="grid cols-2">
+                        <div class="card">
+                            <h2>Xin chào, Ben! 🌟</h2>
+                            <p class="muted">Hôm nay mình muốn luyện gì nào?</p>
+
+                            <div class="divider"></div>
+
+                            <div class="card" style="box-shadow: var(--shadowSoft);">
+                                <div class="row">
+                                    <div class="k">Gia sư hiện tại</div>
+                                    <span class="chip right">🧸 <span class="k">Chưa chọn</span></span>
+                                </div>
+                                <p class="muted" style="margin:8px 0 0;">
+                                    Bạn chưa chọn gia sư. Hãy chọn 1 người bạn đồng hành nhé!
+                                </p>
+                                <div class="spacer"></div>
+                                <button class="btn secondary full">🧸 Chọn gia sư AI</button>
+                            </div>
+
+                            <div class="divider"></div>
+
+                            <div class="row">
+                                <button class="btn primary">💬 Bắt đầu nói</button>
+                                <button class="btn ghost">🎧 Làm quiz</button>
+                                <button class="btn ghost">🎭 Game nhập vai</button>
+                            </div>
+                            <div class="spacer"></div>
+                            <p class="muted">Thông báo / gợi ý bài tiếp theo có thể hiển thị tại đây.</p>
+                        </div>
+
+                        <div class="card">
+                            <div class="k">Lối tắt chức năng</div>
+                            <div class="spacer"></div>
+
+                            <div class="feature-card">
+                                <div class="feature-ico">🗣️</div>
+                                <div>
+                                    <div class="k">Luyện Nghe & Nói</div>
+                                    <div class="muted">Voice chat với gia sư AI.</div>
+                                </div>
+                            </div>
+
+                            <div class="feature-card" style="margin-top:12px">
+                                <div class="feature-ico">📖</div>
+                                <div>
+                                    <div class="k">Luyện Đọc & Viết</div>
+                                    <div class="muted">Quiz + sắp xếp câu.</div>
+                                </div>
+                            </div>
+
+                            <div class="feature-card" style="margin-top:12px">
+                                <div class="feature-ico">📈</div>
+                                <div>
+                                    <div class="k">Báo cáo tiến độ</div>
+                                    <div class="muted">Dashboard 7 ngày + radar kỹ năng.</div>
+                                </div>
+                            </div>
+
+                            <div class="divider"></div>
+                            <button class="btn primary full">▶️ Tiếp tục bài học gợi ý</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ===================== FR-02 TUTOR SELECTION ===================== -->
+                <section class="page" data-page="tutor-selection" id="page-tutor-selection">
+                    <div class="page-title">
+                        <h3>Lựa chọn Gia sư AI</h3>
+                        <span class="template-badge">Template <code class="badgecode">FR-02</code></span>
+                    </div>
+
+                    <div class="card">
+                        <h2>Chọn người bạn đồng hành! ⭐</h2>
+                        <p class="muted">Tối thiểu 3 nhân vật: Gấu • Thỏ • Robot. Card lớn, dễ chạm, phản hồi vui tươi.
+                        </p>
+
+                        <div class="tutor-grid">
+                            <div class="card tutor-card" role="button" aria-label="Chọn gia sư Gấu">
+                                <div class="select-pill">✓</div>
+                                <div class="tutor-head">
+                                    <div class="tutor-avatar">🧸</div>
+                                    <div>
+                                        <div class="k" style="font-size:16px;">Gấu Mập Thông Thái</div>
+                                        <div class="muted">Luôn kiên nhẫn và thích kể chuyện.</div>
+                                    </div>
+                                </div>
+                                <div class="spacer"></div>
+                                <span class="badge">Vui tính</span>
+                                <p class="muted" style="margin:10px 0 0;">Hiệu ứng khi chọn: “nháy mắt / card sáng lên”.
+                                </p>
+                            </div>
+
+                            <div class="card tutor-card" role="button" aria-label="Chọn gia sư Thỏ">
+                                <div class="select-pill">✓</div>
+                                <div class="tutor-head">
+                                    <div class="tutor-avatar">🐰</div>
+                                    <div>
+                                        <div class="k" style="font-size:16px;">Thỏ Con Năng Động</div>
+                                        <div class="muted">Vui vẻ, thích khám phá, khuyến khích bạn nói.</div>
+                                    </div>
+                                </div>
+                                <div class="spacer"></div>
+                                <span class="badge"
+                                    style="border-color: rgba(47,128,255,.22); background: rgba(47,128,255,.10);">Năng
+                                    động</span>
+                                <p class="muted" style="margin:10px 0 0;">Có thể gợi ý chủ đề hội thoại phù hợp.</p>
+                            </div>
+
+                            <div class="card tutor-card" role="button" aria-label="Chọn gia sư Robot">
+                                <div class="select-pill">✓</div>
+                                <div class="tutor-head">
+                                    <div class="tutor-avatar">🤖</div>
+                                    <div>
+                                        <div class="k" style="font-size:16px;">Robot Thông Minh</div>
+                                        <div class="muted">Chỉnh phát âm, nhắc lỗi nhẹ nhàng.</div>
+                                    </div>
+                                </div>
+                                <div class="spacer"></div>
+                                <span class="badge"
+                                    style="border-color: rgba(46,213,115,.24); background: rgba(46,213,115,.12);">Siêu
+                                    thông minh</span>
+                                <p class="muted" style="margin:10px 0 0;">Animation: “đèn nhấp nháy khi suy nghĩ”.</p>
+                            </div>
+                        </div>
+
+                        <div class="divider"></div>
+                        <div class="row">
+                            <span class="chip">Đã chọn: <span class="k">Gấu Mập Thông Thái</span></span>
+                            <span class="right"></span>
+                            <button class="btn ghost">⬅️ Quay lại</button>
+                            <button class="btn primary">✅ Tiếp tục</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ===================== FR-03 VOICE CHAT (Speaking & Listening) ===================== -->
+                <section class="page" data-page="voice-chat" id="page-voice-chat">
+                    <div class="page-title">
+                        <h3>Luyện Speaking & Listening (Voice Chat)</h3>
+                        <span class="template-badge">Template <code class="badgecode">FR-03</code></span>
+                    </div>
+
+                    <div class="grid cols-2">
+                        <div class="card">
+                            <h2>Trò chuyện với gia sư AI 💬</h2>
+                            <p class="muted">Bong bóng thoại 2 chiều, nút micro lớn (nhấn giữ để nói), trạng thái AI
+                                “đang nghe/đang suy nghĩ”.</p>
+
+                            <!-- AI state (no spinner) -->
+                            <div class="row" style="margin-top:12px">
+                                <div class="ai-state listening">
+                                    <div class="ai-face">🐰</div>
+                                    <span>Đang nghe</span>
+                                    <span class="sparkle"></span><span class="sparkle"></span><span
+                                        class="sparkle"></span>
+                                </div>
+                                <div class="ai-state thinking">
+                                    <div class="ai-face">🤖</div>
+                                    <span>Đang suy nghĩ</span>
+                                    <span class="sparkle"></span><span class="sparkle"></span><span
+                                        class="sparkle"></span>
+                                </div>
+                            </div>
+
+                            <div class="spacer"></div>
+
+                            <!-- Chat area -->
+                            <div class="chat" data-component="chat-thread">
+                                <div class="bubble ai">
+                                    <div class="mini"><span class="tiny-face">🧸</span><span>Gia sư AI</span></div>
+                                    Hi Ben! Hôm nay mình luyện chủ đề <span class="k">Ice Cream</span> nhé! 🍦
+                                    <div class="actions">
+                                        <button class="iconbtn" aria-label="Phát lại giọng AI">🔊</button>
+                                        <button class="iconbtn" aria-label="Từ điển nhanh">📖</button>
+                                    </div>
+                                </div>
+
+                                <div class="bubble user">
+                                    <div class="mini"><span class="tiny-face">🙂</span><span>Bạn</span></div>
+                                    I want an ice cream, please.
+                                </div>
+
+                                <!-- Pronunciation scoring (FR-07) -->
+                                <div class="bubble ai"
+                                    style="border-color: rgba(255,138,61,.28); background: rgba(255,138,61,.10);">
+                                    <div class="mini"><span class="tiny-face">🤖</span><span>Chấm phát âm (FR-07)</span>
+                                    </div>
+                                    Bạn phát âm hơi thiếu âm <span class="k">/th/</span> trong “think”.
+                                    <div class="muted" style="margin-top:6px">
+                                        Gợi ý: đặt đầu lưỡi giữa hai răng khi phát âm /th/.
+                                    </div>
+                                    <div class="actions">
+                                        <button class="iconbtn" aria-label="Nghe phát âm chuẩn">🔊</button>
+                                        <button class="btn ghost"
+                                            style="min-height:44px; border-radius:16px; padding:10px 12px;">Thử
+                                            lại</button>
+                                    </div>
+                                </div>
+
+                                <!-- Encouragement (FR-08) -->
+                                <div class="bubble ai"
+                                    style="border-color: rgba(255,182,213,.40); background: rgba(255,182,213,.18);">
+                                    <div class="mini"><span class="tiny-face">🐰</span><span>Động viên (FR-08)</span>
+                                    </div>
+                                    Bạn làm tốt lắm! Mình thử thêm 1 câu ngắn nữa nha 😊
+                                </div>
+                            </div>
+
+                            <div class="mic-area" data-component="voice-controls">
+                                <button class="mic-btn">🎙️ NHẤN GIỮ ĐỂ NÓI</button>
+                                <button class="hint-pill">💡 Gợi ý</button>
+                                <button class="iconbtn" aria-label="Cài đặt chat">⚙️</button>
+                            </div>
+                        </div>
+
+                        <!-- Settings panel per FR-03 -->
+                        <div class="card" data-component="voice-chat-settings">
+                            <div class="row">
+                                <div class="k">Cài đặt buổi học</div>
+                                <span class="chip right">⚙️ Settings</span>
+                            </div>
+
+                            <div class="divider"></div>
+
+                            <div class="field">
+                                <label>Chọn trình độ</label>
+                                <select>
+                                    <option>Starters</option>
+                                    <option>Movers</option>
+                                    <option>Flyers</option>
+                                    <option>A2</option>
+                                    <option>B1</option>
+                                    <option>B2</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label>Tùy chỉnh sửa lỗi</label>
+                                <select>
+                                    <option>Ngay lập tức</option>
+                                    <option>Sau 3-4 câu</option>
+                                    <option>Khi yêu cầu</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label>Mục tiêu buổi học</label>
+                                <select>
+                                    <option>Phát âm</option>
+                                    <option>Từ vựng</option>
+                                    <option>Trôi chảy</option>
+                                </select>
+                            </div>
+
+                            <div class="divider"></div>
+
+                            <div class="k">Chọn chủ đề</div>
+                            <p class="muted">Có thể là popup hoặc danh sách cuộn.</p>
+                            <div class="row">
+                                <button class="btn ghost">🍦 Ice Cream</button>
+                                <button class="btn ghost">🏫 School</button>
+                                <button class="btn ghost">⚽ Sports</button>
+                                <button class="btn ghost">🔬 Science</button>
+                            </div>
+
+                            <div class="divider"></div>
+
+                            <div class="k">Đánh giá sau buổi học</div>
+                            <p class="muted">Sau khi kết thúc phiên, hiển thị tóm tắt + lời khen từ gia sư AI.</p>
+                            <div class="card" style="box-shadow: var(--shadowSoft);">
+                                <div class="row">
+                                    <span class="chip">⏱️ 06:20</span>
+                                    <span class="chip">🎯 Đạt mục tiêu: <span class="k">80%</span></span>
+                                </div>
+                                <div class="spacer"></div>
+                                <div class="k">Khen ngợi</div>
+                                <div class="muted">“Wow! Bạn nói trôi chảy hơn rồi đó! ⭐”</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ===================== FR-04 QUIZ (Reading & Listening) ===================== -->
+                <section class="page" data-page="quiz" id="page-quiz">
+                    <div class="page-title">
+                        <h3>Luyện Reading & Listening (Quiz)</h3>
+                        <span class="template-badge">Template <code class="badgecode">FR-04</code></span>
+                    </div>
+
+                    <div class="card">
+                        <div class="row">
+                            <div>
+                                <div class="k" style="font-size:18px;">Quiz: Listening</div>
+                                <div class="muted">Câu hỏi rõ ràng, 4 đáp án A/B/C/D dạng nút lớn, phản hồi đúng/sai
+                                    ngay + giải thích + script bài nghe.</div>
+                            </div>
+                            <span class="right"></span>
+                            <button class="iconbtn" aria-label="Cài đặt quiz">⚙️</button>
+                            <button class="iconbtn" aria-label="Từ điển nhanh">📖</button>
+                            <button class="iconbtn" aria-label="Nghe lại / tua lại">🔁</button>
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <div class="progresswrap">
+                            <span class="chip">📌 5/10</span>
+                            <div class="progressbar" aria-label="Tiến độ quiz">
+                                <div></div>
+                            </div>
+                            <span class="chip">⏱️ 60s/câu</span>
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <div class="row">
+                            <p class="quiz-q">Nghe và chọn câu đúng:</p>
+                            <span class="right"></span>
+                            <button class="btn ghost" style="min-height:44px; border-radius:16px; padding:10px 12px;">🔊
+                                Phát âm thanh</button>
+                        </div>
+                        <p class="muted" style="margin:6px 0 0">(Script sẽ hiển thị sau khi trả lời.)</p>
+
+                        <div class="quiz-options" role="group" aria-label="Đáp án trắc nghiệm">
+                            <div class="opt">
+                                <div class="tag">A</div>
+                                <div>I want an ice cream, please.</div>
+                            </div>
+                            <div class="opt">
+                                <div class="tag">B</div>
+                                <div>I want a rice cream, please.</div>
+                            </div>
+                            <div class="opt">
+                                <div class="tag">C</div>
+                                <div>I want an ice dream, please.</div>
+                            </div>
+                            <div class="opt">
+                                <div class="tag">D</div>
+                                <div>I want ice, cream please!</div>
+                            </div>
+                        </div>
+
+                        <!-- Instant feedback -->
+                        <div class="result good" style="margin-top:14px">
+                            <div class="k">Đúng! 🎉</div>
+                            <div class="muted">Giải thích: “ice cream” là “kem”. Bạn chọn câu lịch sự có “please”.</div>
+                            <div class="divider"></div>
+                            <div class="k">Script bài nghe</div>
+                            <div class="muted">“I want an ice cream, please.”</div>
+                        </div>
+
+                        <div class="row" style="margin-top:12px">
+                            <button class="btn ghost">⬅️ Câu trước</button>
+                            <span class="right"></span>
+                            <button class="btn primary">➡️ Tiếp tục</button>
+                        </div>
+                    </div>
+
+                    <!-- Quiz Settings (per spec) -->
+                    <div class="grid cols-2">
+                        <div class="card">
+                            <div class="k">Tùy chỉnh Quiz</div>
+                            <p class="muted">Chọn trình độ, chủ đề, độ dài, và giới hạn thời gian.</p>
+                            <div class="field">
+                                <label>Trình độ</label>
+                                <select>
+                                    <option>Starters</option>
+                                    <option>Movers</option>
+                                    <option>Flyers</option>
+                                    <option>A1</option>
+                                    <option>B1</option>
+                                    <option>C1</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label>Chủ đề yêu thích</label>
+                                <select>
+                                    <option>Science</option>
+                                    <option>Sports</option>
+                                    <option>Animals</option>
+                                    <option>School</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="k">Thiết lập</div>
+                            <div class="field">
+                                <label>Độ dài quiz</label>
+                                <select>
+                                    <option>5 câu</option>
+                                    <option selected>10 câu</option>
+                                    <option>20 câu</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label>Giới hạn thời gian</label>
+                                <select>
+                                    <option>Tắt</option>
+                                    <option selected>60s/câu</option>
+                                    <option>90s/câu</option>
+                                </select>
+                            </div>
+                            <div class="spacer"></div>
+                            <button class="btn secondary full">✅ Áp dụng</button>
+                        </div>
+                    </div>
+
+                    <!-- End-of-Quiz report -->
+                    <div class="card">
+                        <div class="row">
+                            <div class="k" style="font-size:18px;">Báo cáo cuối Quiz</div>
+                            <span class="chip right">📊 Report</span>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="grid cols-3">
+                            <div class="feature-card">
+                                <div class="feature-ico">✅</div>
+                                <div>
+                                    <div class="k">Đúng</div>
+                                    <div class="muted">7 câu</div>
+                                </div>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-ico">❌</div>
+                                <div>
+                                    <div class="k">Sai</div>
+                                    <div class="muted">3 câu</div>
+                                </div>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-ico">⏱️</div>
+                                <div>
+                                    <div class="k">Thời gian</div>
+                                    <div class="muted">04:35</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="spacer"></div>
+                        <button class="btn primary full">🎉 Nhận thưởng</button>
+                    </div>
+                </section>
+
+                <!-- ===================== FR-05 WRITING (Arrange Words) ===================== -->
+                <section class="page" data-page="writing-arrange" id="page-writing">
+                    <div class="page-title">
+                        <h3>Luyện Writing (Sắp xếp câu)</h3>
+                        <span class="template-badge">Template <code class="badgecode">FR-05</code></span>
+                    </div>
+
+                    <div class="grid cols-2">
+                        <div class="card">
+                            <h2>Sắp xếp từ thành câu ✍️</h2>
+                            <p class="muted">Các từ là “viên gạch” kéo-thả hoặc click để ghép thành câu.</p>
+
+                            <div class="divider"></div>
+
+                            <div class="k">Gợi ý câu</div>
+                            <p class="muted">Hãy tạo câu để xin mua kem một cách lịch sự.</p>
+
+                            <div class="divider"></div>
+
+                            <div class="k">Các từ xáo trộn</div>
+                            <div class="word-bank" aria-label="Word bank">
+                                <span class="word">please</span>
+                                <span class="word">ice</span>
+                                <span class="word">an</span>
+                                <span class="word">cream</span>
+                                <span class="word">I</span>
+                                <span class="word">want</span>
+                            </div>
+
+                            <div class="spacer"></div>
+
+                            <div class="k">Khu vực sắp xếp</div>
+                            <div class="sentence-area" aria-label="Sentence builder">
+                                <!-- Filled words appear here -->
+                                <span class="word">I</span>
+                                <span class="word">want</span>
+                                <span class="word">an</span>
+                                <span class="word">ice</span>
+                                <span class="word">cream</span>
+                                <span class="word">please</span>
+                            </div>
+
+                            <div class="spacer"></div>
+                            <button class="btn primary full">✅ Kiểm tra</button>
+
+                            <div class="result bad" style="margin-top:12px">
+                                <div class="k">Sai! 😢</div>
+                                <div class="muted">Gợi ý: “please” thường ở cuối câu. (UI có thể chỉ ra từ sai vị trí.)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="k">Mẹo cho trẻ em</div>
+                            <p class="muted">Phản hồi thân thiện, không gây áp lực; đúng thì có hiệu ứng vui nhộn (ngôi
+                                sao/ pháo hoa).</p>
+                            <div class="divider"></div>
+
+                            <div class="feature-card">
+                                <div class="feature-ico">⭐</div>
+                                <div>
+                                    <div class="k">Phản hồi đúng</div>
+                                    <div class="muted">“Đúng!” màu xanh lá + hiệu ứng lấp lánh.</div>
+                                </div>
+                            </div>
+
+                            <div class="feature-card" style="margin-top:12px">
+                                <div class="feature-ico">🧠</div>
+                                <div>
+                                    <div class="k">Gợi ý nếu sai</div>
+                                    <div class="muted">Chỉ rõ chỗ sai + gợi ý sửa, không “phạt”.</div>
+                                </div>
+                            </div>
+
+                            <div class="feature-card" style="margin-top:12px">
+                                <div class="feature-ico">🔊</div>
+                                <div>
+                                    <div class="k">Nghe câu chuẩn</div>
+                                    <div class="muted">Có icon loa để nghe lại câu đúng.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ===================== FR-06 ROLE-PLAY ===================== -->
+                <section class="page" data-page="role-play" id="page-roleplay">
+                    <div class="page-title">
+                        <h3>Game nhập vai (Role-play)</h3>
+                        <span class="template-badge">Template <code class="badgecode">FR-06</code></span>
+                    </div>
+
+                    <div class="card">
+                        <div class="row">
+                            <div>
+                                <div class="k" style="font-size:18px;">Câu chuyện: “Đi mua kem” 🍦</div>
+                                <div class="muted">Bối cảnh 2D đáng yêu + khung thoại lớn + lựa chọn nút to + thanh tiến
+                                    độ + nút tạm dừng/lưu.</div>
+                            </div>
+                            <span class="right"></span>
+                            <button class="btn ghost" style="min-height:44px; border-radius:16px; padding:10px 12px;">⏸️
+                                Tạm dừng</button>
+                            <button class="btn ghost" style="min-height:44px; border-radius:16px; padding:10px 12px;">💾
+                                Lưu</button>
+                            <button class="iconbtn" aria-label="Gợi ý">💡</button>
+                            <button class="iconbtn" aria-label="Từ điển">📖</button>
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <div class="progresswrap">
+                            <span class="chip">📍 Tiến độ: <span class="k">30%</span></span>
+                            <div class="progressbar">
+                                <div style="width:30%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scene" aria-label="Role-play scene">
+                        <div class="decor">
+                            <div class="cloud"></div>
+                            <div class="prop"></div>
+                        </div>
+
+                        <div class="scene-inner">
+                            <div class="row">
+                                <div class="ai-state thinking">
+                                    <div class="ai-face">🧸</div>
+                                    <span>Gia sư AI đang dẫn chuyện</span>
+                                    <span class="sparkle"></span><span class="sparkle"></span><span
+                                        class="sparkle"></span>
+                                </div>
+                                <span class="right"></span>
+                                <span class="chip">🎭 Role mode</span>
+                            </div>
+
+                            <div class="card" style="box-shadow: var(--shadowSoft); margin-top:auto;">
+                                <div class="k">Khung thoại</div>
+                                <p class="muted" style="margin:6px 0 0;">
+                                    “Chào bạn! Bạn muốn mua <span class="k">ice cream</span> vị gì nhỉ?”
+                                </p>
+                                <div class="spacer"></div>
+
+                                <div class="choice-grid" aria-label="Role-play choices">
+                                    <div class="choice">
+                                        <div class="cico">🍫</div>
+                                        <div>Chocolate, please!</div>
+                                    </div>
+                                    <div class="choice">
+                                        <div class="cico">🍓</div>
+                                        <div>Strawberry, please!</div>
+                                    </div>
+                                    <div class="choice">
+                                        <div class="cico">🗣️</div>
+                                        <div>Can I have an ice cream, please?</div>
+                                    </div>
+                                    <div class="choice">
+                                        <div class="cico">❓</div>
+                                        <div>Do you have vanilla?</div>
+                                    </div>
+                                </div>
+
+                                <div class="spacer"></div>
+                                <button class="mic-btn">🎙️ NÓI (Speaking mode)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="k">Tóm tắt cuối game</div>
+                        <p class="muted">Sau khi kết thúc: tóm tắt câu chuyện, bài học, và đánh giá sự tham gia.</p>
+                        <div class="divider"></div>
+                        <div class="row">
+                            <span class="chip">⭐ Tham gia: <span class="k">Tốt</span></span>
+                            <span class="chip">📚 Từ mới: <span class="k">ice cream</span>, <span
+                                    class="k">strawberry</span></span>
+                            <span class="chip">🗣️ Câu hay: <span class="k">Can I have…, please?</span></span>
+                        </div>
+                        <div class="spacer"></div>
+                        <button class="btn primary full">🎉 Nhận huy hiệu</button>
+                    </div>
+                </section>
+
+                <!-- ===================== FR-09 DASHBOARD ===================== -->
+                <section class="page" data-page="dashboard" id="page-dashboard">
+                    <div class="page-title">
+                        <h3>Dashboard theo dõi học tập</h3>
+                        <span class="template-badge">Template <code class="badgecode">FR-09</code></span>
+                    </div>
+
+                    <div class="grid cols-2">
+                        <div class="chart" aria-label="Biểu đồ thời gian học 7 ngày">
+                            <div class="label">
+                                <span class="k">⏱️ Thời gian học (7 ngày)</span>
+                                <span class="chip">Tổng: <span class="k">84 phút</span></span>
+                            </div>
+                            <div class="placeholder" aria-hidden="true"></div>
+                        </div>
+
+                        <div class="chart" aria-label="Biểu đồ radar 4 kỹ năng">
+                            <div class="label">
+                                <span class="k">🕸️ Radar 4 kỹ năng</span>
+                                <span class="chip">Level: <span class="k">Movers</span></span>
+                            </div>
+                            <div class="placeholder" aria-hidden="true" style="background:
+                radial-gradient(circle at 50% 50%, rgba(47,128,255,.18), transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(255,216,77,.18), transparent 60%),
+                repeating-linear-gradient(0deg, rgba(31,58,95,.08), rgba(31,58,95,.08) 2px, transparent 2px, transparent 16px),
+                repeating-linear-gradient(90deg, rgba(31,58,95,.08), rgba(31,58,95,.08) 2px, transparent 2px, transparent 16px);
+              "></div>
+                        </div>
+                    </div>
+
+                    <div class="grid cols-3" style="margin-top:14px">
+                        <div class="card">
+                            <div class="k">🏅 Huy hiệu</div>
+                            <p class="muted">Hiển thị phần thưởng để tạo động lực.</p>
+                            <div class="row">
+                                <span class="chip">⭐ Starter</span>
+                                <span class="chip">🔥 7-day streak</span>
+                                <span class="chip">🎧 Listening Pro</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="k">📌 Tóm tắt</div>
+                            <p class="muted">Số liệu nổi bật, dễ hiểu cho trẻ em.</p>
+                            <div class="row">
+                                <span class="chip">✅ Bài hoàn thành: <span class="k">12</span></span>
+                                <span class="chip">⏱️ Tổng giờ: <span class="k">4h 10m</span></span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="k">✨ Gợi ý tiếp theo</div>
+                            <p class="muted">Khuyến khích tiếp tục học.</p>
+                            <button class="btn primary full">▶️ Học tiếp</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ===================== SETTINGS (used by FR-03/FR-04 too) ===================== -->
+                <section class="page" data-page="settings" id="page-settings">
+                    <div class="page-title">
+                        <h3>Cài đặt</h3>
+                        <span class="template-badge">Template <code class="badgecode">SETTINGS</code></span>
+                    </div>
+
+                    <div class="grid cols-2">
+                        <div class="card">
+                            <div class="k">⚙️ Tài khoản & học tập</div>
+                            <p class="muted">Điều chỉnh trình độ, mục tiêu học, và hành vi sửa lỗi.</p>
+
+                            <div class="field">
+                                <label>Trình độ mặc định</label>
+                                <select>
+                                    <option>Starters</option>
+                                    <option>Movers</option>
+                                    <option>Flyers</option>
+                                    <option>A2</option>
+                                    <option>B1</option>
+                                    <option>B2</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label>Mục tiêu buổi học mặc định</label>
+                                <select>
+                                    <option>Phát âm</option>
+                                    <option>Từ vựng</option>
+                                    <option>Trôi chảy</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label>Chế độ sửa lỗi</label>
+                                <select>
+                                    <option>Ngay lập tức</option>
+                                    <option>Sau 3-4 câu</option>
+                                    <option>Khi yêu cầu</option>
+                                </select>
+                            </div>
+
+                            <div class="spacer"></div>
+                            <button class="btn secondary full">✅ Lưu cài đặt</button>
+                        </div>
+
+                        <div class="card">
+                            <div class="k">🔊 Âm thanh & hỗ trợ</div>
+                            <p class="muted">Gợi ý: có thể thêm toggle âm thanh / hướng dẫn phụ huynh.</p>
+
+                            <div class="feature-card">
+                                <div class="feature-ico">🔊</div>
+                                <div>
+                                    <div class="k">Âm thanh</div>
+                                    <div class="muted">Bật/Tắt hiệu ứng vui nhộn khi đúng.</div>
+                                </div>
+                            </div>
+
+                            <div class="feature-card" style="margin-top:12px">
+                                <div class="feature-ico">👨‍👩‍👧‍👦</div>
+                                <div>
+                                    <div class="k">Chế độ phụ huynh</div>
+                                    <div class="muted">Xem báo cáo, thiết lập mục tiêu.</div>
+                                </div>
+                            </div>
+
+                            <div class="feature-card" style="margin-top:12px">
+                                <div class="feature-ico">🛡️</div>
+                                <div>
+                                    <div class="k">Quyền riêng tư</div>
+                                    <div class="muted">Chính sách và quyền dữ liệu.</div>
+                                </div>
+                            </div>
+
+                            <div class="divider"></div>
+                            <button class="btn ghost full">💬 Liên hệ hỗ trợ</button>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- ===================== MOBILE BOTTOM NAV (Component) ===================== -->
+    <nav class="bottom-nav" aria-label="Điều hướng mobile" data-component="app-bottom-nav">
+        <button class="tab" aria-current="page">
+            <div class="ico">🏠</div>
+            <div class="lbl">Nhà</div>
+        </button>
+        <button class="tab">
+            <div class="ico">📚</div>
+            <div class="lbl">Học</div>
+        </button>
+        <button class="tab">
+            <div class="ico">🏆</div>
+            <div class="lbl">Thành tích</div>
+        </button>
+        <button class="tab">
+            <div class="ico">⚙️</div>
+            <div class="lbl">Cài đặt</div>
+        </button>
+    </nav>
+
+    <!-- No heavy JS here intentionally; Angular generator can wire routing/state/actions. -->
+</body>
+
+</html>

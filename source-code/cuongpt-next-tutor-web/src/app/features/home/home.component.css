@@ -1,0 +1,120 @@
+.home-container {
+    min-height: 100vh;
+    padding: 20px;
+    display: grid;
+    gap: 20px;
+    max-width: var(--maxw);
+    margin: 0 auto;
+}
+
+@media (min-width: 980px) {
+    .home-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.card {
+    background: rgba(255, 255, 255, .82);
+    border: 1px solid var(--border);
+    border-radius: var(--r-xl);
+    box-shadow: var(--shadow);
+    padding: 16px;
+    backdrop-filter: blur(10px);
+}
+
+.card h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 900;
+}
+
+.tutor-status {
+    box-shadow: var(--shadowSoft);
+    margin-top: 12px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    border: 0;
+    border-radius: 20px;
+    padding: 14px 16px;
+    min-height: var(--tap);
+    font-weight: 900;
+    cursor: pointer;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform .08s ease;
+}
+
+.btn:active {
+    transform: scale(.98);
+}
+
+.btn.primary {
+    color: white;
+    background: linear-gradient(135deg, var(--blue), #66B2FF);
+    box-shadow: 0 16px 32px rgba(47, 128, 255, .25);
+}
+
+.btn.secondary {
+    color: var(--ink);
+    background: linear-gradient(135deg, var(--yellow), var(--orange));
+    box-shadow: 0 16px 32px rgba(255, 138, 61, .18);
+}
+
+.btn.ghost {
+    color: var(--ink);
+    background: rgba(47, 128, 255, .10);
+    border: 1px solid rgba(47, 128, 255, .16);
+    box-shadow: none;
+}
+
+.btn.full {
+    width: 100%;
+}
+
+.chip {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    min-height: 40px;
+    padding: 10px 12px;
+    border-radius: 999px;
+    background: rgba(246, 251, 255, .85);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+.feature-card {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 14px;
+    border-radius: var(--r-xl);
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, .78);
+    box-shadow: var(--shadowSoft);
+    margin-top: 12px;
+}
+
+.feature-ico {
+    width: 52px;
+    height: 52px;
+    border-radius: 22px;
+    display: grid;
+    place-items: center;
+    font-size: 22px;
+    background: rgba(255, 182, 213, .20);
+    border: 1px solid rgba(255, 182, 213, .30);
+}
