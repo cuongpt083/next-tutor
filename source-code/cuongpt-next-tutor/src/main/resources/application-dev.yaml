@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/nexttutor_dev
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://192.168.10.32:5432/nexttutordb
+    username: nxtutor
+    password: NxTut0r2025
     
   jpa:
     show-sql: true
