@@ -53,7 +53,18 @@
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
-        
+        <!--Thu vien swagger-->
+<!--        <dependency>-->
+<!--            <groupId>org.springdoc</groupId>-->
+<!--            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>-->
+<!--            <version>2.8.14</version>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>2.2.41</version>
+        </dependency>
+        <!--Thu vien swagger-->
         <!-- Liquibase for database migrations -->
         <dependency>
             <groupId>org.liquibase</groupId>
@@ -98,6 +109,10 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
     </dependencies>
     
     <build>
@@ -113,6 +128,54 @@
                         </exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>7.12.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <skip>true</skip>
+                            <inputSpec>${project.basedir}/src/main/resources/api/2.openapi-specs.yaml</inputSpec>
+                            <generatorName>spring</generatorName>
+                            <library>spring-boot</library>
+                            <output>${project.build.directory}/generated-sources/api</output>
+                            <strictSpec>true</strictSpec>
+                            <generateApiTests>false</generateApiTests>
+                            <generateModelTests>false</generateModelTests>
+                            <generateApis>true</generateApis>
+                            <generateModels>true</generateModels>
+                            <modelNameSuffix>DTO</modelNameSuffix>
+                            <configOptions>
+                                <useJakartaEe>true</useJakartaEe>
+                                <oas3>true</oas3>
+                                <modelPackage>com.cuongpt.nexttutor.model.dto</modelPackage>
+                                <apiPackage>com.cuongpt.nexttutor.api</apiPackage>
+                                <dateLibrary>java8</dateLibrary>
+                                <openApiNullable>false</openApiNullable>
+                                <delegatePattern>false</delegatePattern>
+                                <!--<reactive>true</reactive>-->
+                                <useTags>true</useTags>
+                                <useSpringBoot3>true</useSpringBoot3>
+
+                                <!-- Generate only interfaces, set false to generate Controller classes -->
+                                <interfaceOnly>false</interfaceOnly>
+                                <additionalModelTypeAnnotations>
+                                    @lombok.Builder
+                                    @lombok.Data
+                                    @lombok.NoArgsConstructor
+                                    @lombok.AllArgsConstructor
+                                </additionalModelTypeAnnotations>
+                            </configOptions>
+                            <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

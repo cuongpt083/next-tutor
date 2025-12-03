@@ -1,0 +1,457 @@
+openapi: 3.0.3
+info:
+  title: Next Tutor API
+  description: API for Next Generation Private Tutor application.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Local Development Server
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    # Auth
+    LoginRequest:
+      type: object
+      properties:
+        provider:
+          type: string
+          enum: [FACEBOOK, ZALO]
+        accessToken:
+          type: string
+      required:
+        - provider
+        - accessToken
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+        avatarUrl:
+          type: string
+        role:
+          type: string
+          enum: [LEARNER, ADMIN]
+    
+    # Tutors
+    Tutor:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        avatarUrl:
+          type: string
+        personalityPrompt:
+          type: string
+
+    # Sessions
+    StartSessionRequest:
+      type: object
+      properties:
+        tutorId:
+          type: string
+        mode:
+          type: string
+          enum: [SPEAKING, ROLE_PLAY]
+        topicId:
+          type: string
+        level:
+          type: string
+      required:
+        - tutorId
+        - mode
+        - topicId
+        - level
+    StartSessionResponse:
+      type: object
+      properties:
+        sessionId:
+          type: string
+          format: uuid
+        initialMessage:
+          $ref: '#/components/schemas/AiMessageContent'
+    
+    InteractRequest:
+      type: object
+      properties:
+        inputType:
+          type: string
+          enum: [TEXT, AUDIO]
+        content:
+          type: string
+      required:
+        - inputType
+        - content
+    InteractResponse:
+      type: object
+      properties:
+        aiResponse:
+          $ref: '#/components/schemas/AiMessageContent'
+        feedback:
+          $ref: '#/components/schemas/Feedback'
+    
+    AiMessageContent:
+      type: object
+      properties:
+        text:
+          type: string
+        audioUrl:
+          type: string
+    
+    Feedback:
+      type: object
+      properties:
+        score:
+          type: integer
+        correction:
+          type: string
+        pronunciationErrors:
+          type: array
+          items:
+            type: object # Placeholder for detailed error structure
+    
+    GetHintRequest:
+      type: object
+      properties:
+        context:
+          type: string
+    GetHintResponse:
+      type: object
+      properties:
+        hintText:
+          type: string
+        hintAudioUrl:
+          type: string
+
+    # Quizzes
+    Quiz:
+      type: object
+      properties:
+        quizId:
+          type: string
+          format: uuid
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
+    Question:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: [MULTIPLE_CHOICE]
+        content:
+          type: string
+        options:
+          type: array
+          items:
+            type: string
+        audioUrl:
+          type: string
+    
+    SubmitQuizRequest:
+      type: object
+      properties:
+        answers:
+          type: array
+          items:
+            type: object
+            properties:
+              questionId:
+                type: string
+              selectedOption:
+                type: string
+    SubmitQuizResponse:
+      type: object
+      properties:
+        score:
+          type: integer
+        totalQuestions:
+          type: integer
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              questionId:
+                type: string
+              isCorrect:
+                type: boolean
+              explanation:
+                type: string
+
+    # AI Utility
+    SttResponse:
+      type: object
+      properties:
+        text:
+          type: string
+        confidence:
+          type: number
+    
+    TtsRequest:
+      type: object
+      properties:
+        text:
+          type: string
+        voiceId:
+          type: string
+      required:
+        - text
+    
+    PronunciationAssessmentResponse:
+      type: object
+      properties:
+        score:
+          type: integer
+        phonemes:
+          type: array
+          items:
+            type: object
+            properties:
+              phoneme:
+                type: string
+              isGood:
+                type: boolean
+              suggestion:
+                type: string
+        overallFeedback:
+          type: string
+
+security:
+  - bearerAuth: []
+
+paths:
+  /api/v1/auth/login:
+    post:
+      summary: Login with OAuth2 provider
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+
+  /api/v1/tutors:
+    get:
+      summary: Get available AI tutors
+      responses:
+        '200':
+          description: List of tutors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tutor'
+
+  /api/v1/sessions/start:
+    post:
+      summary: Start a new learning session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartSessionRequest'
+      responses:
+        '200':
+          description: Session started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartSessionResponse'
+
+  /api/v1/sessions/{sessionId}/interact:
+    post:
+      summary: Interact with AI Tutor
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InteractRequest'
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                inputType:
+                  type: string
+                  enum: [AUDIO]
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: AI Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InteractResponse'
+
+  /api/v1/sessions/{sessionId}/hint:
+    post:
+      summary: Get a hint for the current context
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetHintRequest'
+      responses:
+        '200':
+          description: Hint provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetHintResponse'
+
+  /api/v1/quizzes:
+    get:
+      summary: Get a quiz based on criteria
+      parameters:
+        - name: level
+          in: query
+          schema:
+            type: string
+        - name: skill
+          in: query
+          schema:
+            type: string
+        - name: topic
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Quiz generated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quiz'
+
+  /api/v1/quizzes/{quizId}/submit:
+    post:
+      summary: Submit quiz answers
+      parameters:
+        - name: quizId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmitQuizRequest'
+      responses:
+        '200':
+          description: Quiz results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmitQuizResponse'
+
+  /api/v1/ai/stt:
+    post:
+      summary: Speech to Text
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Transcribed text
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SttResponse'
+
+  /api/v1/ai/tts:
+    post:
+      summary: Text to Speech
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TtsRequest'
+      responses:
+        '200':
+          description: Audio stream
+          content:
+            audio/mpeg:
+              schema:
+                type: string
+                format: binary
+
+  /api/v1/ai/assessment/pronunciation:
+    post:
+      summary: Pronunciation Assessment
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                audio:
+                  type: string
+                  format: binary
+                targetText:
+                  type: string
+      responses:
+        '200':
+          description: Assessment result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PronunciationAssessmentResponse'

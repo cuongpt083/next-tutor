@@ -66,7 +66,9 @@ export class AuthService {
      * @returns True if user has a valid token
      */
     isAuthenticated(): boolean {
-        return !!this.getToken();
+        // TODO: Revert to authentication required when backend API is ready
+        return true;
+        // return !!this.getToken();
     }
 
     /**
@@ -75,6 +77,15 @@ export class AuthService {
      * @returns Current user or null if not authenticated
      */
     getCurrentUser(): User | null {
+        // TODO: Revert to authentication required when backend API is ready
+        if (!this.currentUserSubject.value) {
+            return {
+                id: 'mock-user-id',
+                displayName: 'Mock User',
+                avatarUrl: 'assets/mock-avatar.png',
+                role: 'USER'
+            };
+        }
         return this.currentUserSubject.value;
     }
 

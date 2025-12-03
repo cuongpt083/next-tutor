@@ -5,27 +5,25 @@
  */
 package com.cuongpt.nexttutor.api;
 
-import com.cuongpt.nexttutor.model.dto.ApiV1SessionsSessionIdInteractPostRequestDTO;
-import com.cuongpt.nexttutor.model.dto.GetHintRequestDTO;
-import com.cuongpt.nexttutor.model.dto.GetHintResponseDTO;
-import com.cuongpt.nexttutor.model.dto.InteractRequestDTO;
-import com.cuongpt.nexttutor.model.dto.InteractResponseDTO;
-import com.cuongpt.nexttutor.model.dto.LoginRequestDTO;
-import com.cuongpt.nexttutor.model.dto.LoginResponseDTO;
-import com.cuongpt.nexttutor.model.dto.PronunciationAssessmentResponseDTO;
+import com.cuongpt.nexttutor.model.dto.request.GetHintRequestDTO;
+import com.cuongpt.nexttutor.model.dto.response.GetHintResponseDTO;
+import com.cuongpt.nexttutor.model.dto.request.InteractRequestDTO;
+import com.cuongpt.nexttutor.model.dto.response.InteractResponseDTO;
+import com.cuongpt.nexttutor.model.dto.request.LoginRequestDTO;
+import com.cuongpt.nexttutor.model.dto.response.LoginResponseDTO;
+import com.cuongpt.nexttutor.model.dto.response.PronunciationAssessmentResponseDTO;
 import com.cuongpt.nexttutor.model.dto.QuizDTO;
-import com.cuongpt.nexttutor.model.dto.StartSessionRequestDTO;
-import com.cuongpt.nexttutor.model.dto.StartSessionResponseDTO;
-import com.cuongpt.nexttutor.model.dto.SttResponseDTO;
-import com.cuongpt.nexttutor.model.dto.SubmitQuizRequestDTO;
-import com.cuongpt.nexttutor.model.dto.SubmitQuizResponseDTO;
-import com.cuongpt.nexttutor.model.dto.TtsRequestDTO;
+import com.cuongpt.nexttutor.model.dto.request.StartSessionRequestDTO;
+import com.cuongpt.nexttutor.model.dto.response.StartSessionResponseDTO;
+import com.cuongpt.nexttutor.model.dto.response.SttResponseDTO;
+import com.cuongpt.nexttutor.model.dto.request.SubmitQuizRequestDTO;
+import com.cuongpt.nexttutor.model.dto.response.SubmitQuizResponseDTO;
+import com.cuongpt.nexttutor.model.dto.request.TtsRequestDTO;
 import com.cuongpt.nexttutor.model.dto.TutorDTO;
 import java.util.UUID;
-import io.swagger.v3.oas.annotations.ExternalDocumentation;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -42,9 +40,8 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
+
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 

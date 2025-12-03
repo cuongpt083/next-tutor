@@ -14,10 +14,13 @@ export const authGuard: CanActivateFn = (route, state) => {
     const authService = inject(AuthService);
     const router = inject(Router);
 
-    if (authService.isAuthenticated()) {
-        return true;
-    }
+    // TODO: Revert to authentication required when backend API is ready
+    return true;
 
-    router.navigate(['/login']);
-    return false;
+    // if (authService.isAuthenticated()) {
+    //     return true;
+    // }
+
+    // router.navigate(['/login']);
+    // return false;
 };
