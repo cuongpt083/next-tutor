@@ -243,6 +243,8 @@ security:
 paths:
   /api/v1/auth/login:
     post:
+      tags:
+        - Auth
       summary: Login with OAuth2 provider
       security: []
       requestBody:
@@ -261,6 +263,8 @@ paths:
 
   /api/v1/tutors:
     get:
+      tags:
+        - Tutors
       summary: Get available AI tutors
       responses:
         '200':
@@ -274,6 +278,8 @@ paths:
 
   /api/v1/sessions/start:
     post:
+      tags:
+        - Sessions
       summary: Start a new learning session
       requestBody:
         required: true
@@ -291,6 +297,8 @@ paths:
 
   /api/v1/sessions/{sessionId}/interact:
     post:
+      tags:
+        - Sessions
       summary: Interact with AI Tutor
       parameters:
         - name: sessionId
@@ -325,6 +333,8 @@ paths:
 
   /api/v1/sessions/{sessionId}/hint:
     post:
+      tags:
+        - Sessions
       summary: Get a hint for the current context
       parameters:
         - name: sessionId
@@ -348,6 +358,8 @@ paths:
 
   /api/v1/quizzes:
     get:
+      tags:
+        - Quizzes
       summary: Get a quiz based on criteria
       parameters:
         - name: level
@@ -372,6 +384,8 @@ paths:
 
   /api/v1/quizzes/{quizId}/submit:
     post:
+      tags:
+        - Quizzes
       summary: Submit quiz answers
       parameters:
         - name: quizId
@@ -396,6 +410,8 @@ paths:
 
   /api/v1/ai/stt:
     post:
+      tags:
+        - AI
       summary: Speech to Text
       requestBody:
         required: true
@@ -417,6 +433,8 @@ paths:
 
   /api/v1/ai/tts:
     post:
+      tags:
+        - AI
       summary: Text to Speech
       requestBody:
         required: true
@@ -435,6 +453,8 @@ paths:
 
   /api/v1/ai/assessment/pronunciation:
     post:
+      tags:
+        - AI
       summary: Pronunciation Assessment
       requestBody:
         required: true

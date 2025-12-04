@@ -1,6 +1,7 @@
 package com.cuongpt.nexttutor.repository;
 
 import com.cuongpt.nexttutor.model.entity.User;
+import com.cuongpt.nexttutor.model.enums.AuthProvider;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +10,6 @@ import java.util.UUID;
 
 /**
  * Repository interface for User entity operations.
- * Provides data access methods for user management.
  * 
  * @author Next Tutor Team
  * @since 1.0.0
@@ -20,9 +20,9 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     /**
      * Finds a user by OAuth provider and OAuth ID.
      * 
-     * @param oauthProvider The OAuth provider name (FACEBOOK, ZALO)
-     * @param oauthId       The user ID from the OAuth provider
-     * @return Optional containing the user if found
+     * @param provider the OAuth provider
+     * @param oauthId  the OAuth ID from the provider
+     * @return an Optional containing the user if found
      */
-    Optional<User> findByOauthProviderAndOauthId(String oauthProvider, String oauthId);
+    Optional<User> findByOauthProviderAndOauthId(AuthProvider provider, String oauthId);
 }
