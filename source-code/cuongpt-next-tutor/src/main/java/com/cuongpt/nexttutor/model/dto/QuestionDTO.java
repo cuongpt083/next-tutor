@@ -9,7 +9,6 @@ import org.springframework.lang.Nullable;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
-
 import java.util.*;
 import jakarta.annotation.Generated;
 
@@ -68,7 +67,12 @@ public class QuestionDTO {
   @Valid
   private List<String> options = new ArrayList<>();
 
+  private @Nullable String solution;
+
+  private @Nullable String explanation;
+
+  private @Nullable String hint;
+
   private @Nullable String audioUrl;
 
 }
-

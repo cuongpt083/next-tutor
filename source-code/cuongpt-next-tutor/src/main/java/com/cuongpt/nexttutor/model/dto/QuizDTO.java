@@ -7,7 +7,6 @@ import java.util.UUID;
 import org.springframework.lang.Nullable;
 import jakarta.validation.Valid;
 
-
 import jakarta.annotation.Generated;
 
 /**
@@ -24,9 +23,10 @@ public class QuizDTO {
 
   private @Nullable UUID quizId;
 
+  private @Nullable Boolean isActive;
+
   @lombok.Builder.Default
   @Valid
   private List<@Valid QuestionDTO> questions = new ArrayList<>();
 
 }
-

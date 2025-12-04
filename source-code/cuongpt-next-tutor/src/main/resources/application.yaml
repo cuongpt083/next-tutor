@@ -50,6 +50,11 @@ cors:
   allowed-headers: "*"
   allow-credentials: true
 
+# Application Security
+app:
+  security:
+    rc4-key: ${RC4_KEY:nexttutor-quiz-encryption-key-2024}
+
 # Logging
 logging:
   level:

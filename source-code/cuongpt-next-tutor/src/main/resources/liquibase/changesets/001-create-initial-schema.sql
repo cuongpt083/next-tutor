@@ -63,3 +63,16 @@ CREATE TABLE user_progress (
     last_updated TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     UNIQUE(user_id, skill_type)
 );
+
+--changeset nexttutor:007-create-quizzes-table
+CREATE TABLE quizzes (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    level VARCHAR(20) NOT NULL,
+    skill VARCHAR(50) NOT NULL,
+    topic VARCHAR(100) NOT NULL,
+    is_active BOOLEAN DEFAULT true,
+    questions JSONB,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
